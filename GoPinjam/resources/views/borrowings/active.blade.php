@@ -75,7 +75,7 @@
                 @endif
 
                 @if ($activeBorrowings->isEmpty())
-                    <p class="text-center text-muted py-4">Tidak ada benda yang sedang dipinjam saat ini.</p>
+                    <p class="text-center text-muted py-4">Tidak ada berkas yang sedang dipinjam saat ini.</p>
                 @else
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover align-middle">
@@ -99,7 +99,7 @@
                                         <td>{{ $borrowing->purpose }}</td>
                                         <td>{{ $borrowing->borrowed_at->format('d M Y H:i') }}</td>
                                         <td>
-                                            <form action="{{ route('borrowings.return', $borrowing->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin mengembalikan benda ini?');">
+                                            <form action="{{ route('borrowings.return', $borrowing->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin mengembalikan berkas ini?');">
                                                 @csrf
                                                 @method('PUT')
                                                 <button type="submit" class="btn btn-success btn-sm">

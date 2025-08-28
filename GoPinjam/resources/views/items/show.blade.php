@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Benda & QR Code</title>
+    <title>Detail Berkas & QR Code</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -81,7 +81,7 @@
 
             <div class="mt-4">
                 <a href="{{ route('items.create') }}" class="btn btn-primary">
-                    Daftarkan Benda Lain
+                    Daftarkan Berkas Lain
                 </a>
             </div>
         </div>

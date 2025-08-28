@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Benda Sedang Dipinjam</title>
+    <title>Berkas Sedang Dipinjam</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -68,7 +68,7 @@
                 <strong>{{ optional($activeBorrowing->user)->name ?? 'Pengguna Terhapus' }}</strong> 
                 sejak {{ optional($activeBorrowing->borrowed_at)->format('d M Y H:i') ?? '-' }}.
             </p>
-            <p class="mb-4">Anda tidak dapat meminjam benda ini sampai dikembalikan.</p>
+            <p class="mb-4">Anda tidak dapat meminjam berkas ini sampai dikembalikan.</p>
             <a href="{{ route('dashboard') }}" class="btn btn-primary">Kembali ke Beranda</a>
         </div>
     </div>

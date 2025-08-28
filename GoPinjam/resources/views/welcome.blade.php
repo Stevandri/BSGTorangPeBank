@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selamat Datang di Aplikasi Peminjaman Benda</title>
+    <title>Selamat Datang di Aplikasi Peminjaman Berkas</title>
     <style>
         body { font-family: sans-serif; text-align: center; margin-top: 50px; }
         a { display: inline-block; margin: 10px; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; }

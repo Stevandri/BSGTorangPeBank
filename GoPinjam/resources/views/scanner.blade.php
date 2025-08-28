@@ -9,6 +9,7 @@
 
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 </head>
+
 <body class="bg-light">
 
     <div class="container-fluid p-0">
@@ -73,7 +74,7 @@
                 {{-- Form Input Kode Unik Manual --}}
                 <form action="{{ route('items.show-borrow-form') }}" method="GET" class="mb-4">
                     <div class="input-group">
-                        <input type="text" name="unique_code" class="form-control" placeholder="Masukkan Kode Unik Berkas" required>
+                        <input type="text" name="unique_code" class="form-control" placeholder="Masukkan Nomor Akad Kredit Berkas" required>
                         <button type="submit" class="btn btn-primary">Cari Berkas</button>
                     </div>
                 </form>

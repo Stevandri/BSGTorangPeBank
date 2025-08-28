@@ -15,6 +15,25 @@
 </head>
 
 <style>
+    /* Efek hover umum untuk semua card */
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-8px); /* naik sedikit */
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25); /* bayangan lebih tegas */
+        cursor: pointer;
+    }
+
+    /* Biar link <a> tetap full clickable area */
+    .card a {
+        display: block;
+        height: 100%;
+        width: 100%;
+    }
+
+
     /* ini untuk bg dashboard untuk berkas tersedia */
     .modifstev{
         background-image: url(ilustrasiterdaftar.png);

@@ -104,8 +104,8 @@
                         <table class="table table-hover table-bordered align-middle">
                             <thead class="table-light">
                                 <tr>
-                                    <th>Nama Benda</th>
-                                    <th>Kode Unik</th>
+                                    <th>Nama Debitur</th>
+                                    <th>Nomor Akad Kredit</th>
                                     <th>Peminjam</th>
                                     <th>Tujuan</th>
                                     <th>Waktu Pinjam</th>

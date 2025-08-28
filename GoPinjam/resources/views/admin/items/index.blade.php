@@ -93,7 +93,7 @@
                 <thead class="table-light">
                     <tr>
                         <th>Nama Debitur</th>
-                        <th>Kode Akad Kredit</th>
+                        <th>Nomor Akad Kredit</th>
                         <th>Status</th>
                         <th>Dipinjam Oleh</th>
                         <th>Aksi</th>
