@@ -68,10 +68,10 @@
                     <thead class="table-light">
                         <tr>
                             <th>Nama</th>
-                            <th>Username</th>
+                            {{-- <th>Username</th> --}}
                             <th>Email</th>
                             <th>Posisi</th>
-                            <th>Role</th>
+                            {{-- <th>Role</th> --}}
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -79,9 +79,9 @@
                         @forelse ($users as $user)
                             <tr>
                                 <td>{{ $user->name }}</td>
-                                <td>{{ $user->username }}</td>
+                                {{-- <td>{{ $user->username }}</td> --}}
                                 <td>{{ $user->email }}</td>
-                                <td>{{ $user->position }}</td>
+                                {{-- <td>{{ $user->position }}</td> --}}
                                 <td>
                                     <span class="badge {{ $user->role === 'admin' ? 'bg-primary' : 'bg-secondary' }}">
                                         {{ ucfirst($user->role) }}

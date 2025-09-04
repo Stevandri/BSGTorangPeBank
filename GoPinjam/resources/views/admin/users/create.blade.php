@@ -89,19 +89,19 @@
 
                         <div class="mb-3">
                             <label for="position" class="form-label">Posisi/Jabatan</label>
-                            <input type="text" id="position" name="position" value="{{ old('position') }}" required class="form-control">
+                            <input type="text" id="role" name="role" value="{{ old('role') }}" required class="form-control">
                             @error('position')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
 
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <label for="phone_number" class="form-label">Nomor Telepon</label>
                             <input type="text" id="phone_number" name="phone_number" value="{{ old('phone_number') }}" required class="form-control">
                             @error('phone_number')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
-                        </div>
+                        </div> --}}
 
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
@@ -111,13 +111,13 @@
                             @enderror
                         </div>
 
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
                             <input type="text" id="username" name="username" value="{{ old('username') }}" required class="form-control">
                             @error('username')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
-                        </div>
+                        </div> --}}
 
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
