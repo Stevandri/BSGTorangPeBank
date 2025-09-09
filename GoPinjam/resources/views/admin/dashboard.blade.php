@@ -6,7 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>GoPinjam</title>
-
+    <link rel="icon" href="{{ asset('favicon.png') }}" type="image/png">
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -15,18 +15,17 @@
 </head>
 
 <style>
-    /* Efek hover umum untuk semua card */
+
     .card {
         transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .card:hover {
-        transform: translateY(-8px); /* naik sedikit */
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25); /* bayangan lebih tegas */
+        transform: translateY(-8px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25); S
         cursor: pointer;
     }
 
-    /* Biar link <a> tetap full clickable area */
     .card a {
         display: block;
         height: 100%;
@@ -170,7 +169,6 @@
         </div>
     </div>
 
-    <!-- Bootstrap Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

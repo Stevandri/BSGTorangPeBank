@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use App\Models\Borrowing;
-use App\Models\User; // Tambahkan ini
+use App\Models\User; 
 use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Storage;
@@ -12,15 +12,12 @@ use Illuminate\Support\Str;
 
 class ItemController extends Controller
 {
-
-      public function create()
-    {
+    public function create(){
         return view('items.create');
     }
     
-    //menmapilkan kode qr
-    public function store(Request $request)
-    {
+    //==================menmapilkan kode qr==============================
+    public function store(Request $request){
         $request->validate([
             'name' => 'required|string|max:255',
             'unique_code' => 'required|string|max:255|unique:items,unique_code',
@@ -31,58 +28,52 @@ class ItemController extends Controller
             'unique_code' => $request->unique_code,
         ]);
 
-        // Generate QR Code
+        //generate QR
         $qrCodeData = json_encode([
             'item_id' => $item->id,
             'unique_code' => $item->unique_code,
             'item_name' => $item->name
-        ]); // Data yang akan di-embed dalam QR code
+        ]); 
 
         $fileName = 'qr-' . Str::slug($item->unique_code) . '.svg';
         $filePath = 'public/qrcodes/' . $fileName;
 
-        // Pastikan direktori ada
+        //kalo gaada
         if (!Storage::exists('public/qrcodes')) {
             Storage::makeDirectory('public/qrcodes');
         }
 
         QrCode::format('svg')->size(200)->generate($qrCodeData, storage_path('app/' . $filePath));
 
-        // Update path QR Code di database
-        $item->qr_code_path = 'qrcodes/' . $fileName; // Path relatif dari storage/app/public
+        //update path QR Code di database
+        $item->qr_code_path = 'qrcodes/' . $fileName;
         $item->save();
 
         return redirect()->route('items.show', $item->id)
-                         ->with('success', 'Benda berhasil didaftarkan dan QR Code berhasil dibuat!');
+                         ->with('success', 'Berkas berhasil didaftarkan dan QR Code berhasil dibuat!');
     }
 
 
-      /**
-     * Menampilkan detail benda beserta QR Code-nya.
-     */
-    public function show(Item $item)
-    {
-        // Untuk menampilkan gambar QR Code, kita perlu membuat symlink ke storage
-        // Pastikan Anda sudah menjalankan: php artisan storage:link
+
+    //==================================nampilkan qr code==================================
+    public function show(Item $item){
         $qrCodeUrl = Storage::url($item->qr_code_path);
         return view('items.show', compact('item', 'qrCodeUrl'));
     }
 
-    /**
-     * Menampilkan form peminjaman setelah QR Code dipindai.
-     */
-    public function borrowForm(Request $request)
-    {
+
+    //===========================form peminjaman dengan akses qr=====================================
+    public function borrowForm(Request $request){
         $uniqueCode = $request->query('unique_code');
 
         if (!$uniqueCode) {
-            return redirect()->route('login')->with('error', 'Kode unik benda tidak ditemukan.');
+            return redirect()->route('login')->with('error', 'Berkas tidak ditemukan.');
         }
 
         $item = Item::where('unique_code', $uniqueCode)->first();
 
         if (!$item) {
-            return redirect()->route('login')->with('error', 'Benda dengan kode unik tersebut tidak terdaftar.');
+            return redirect()->route('login')->with('error', 'Berkas dengan nomor akad kredit tersebut tidak terdaftar.');
         }
 
         $activeBorrowing = Borrowing::where('item_id', $item->id)
@@ -93,116 +84,112 @@ class ItemController extends Controller
             return view('items.borrow-locked', compact('item', 'activeBorrowing'));
         }
 
-        // Ambil semua pengguna yang terdaftar untuk dropdown
+        //dropdown smua pengguna terfdtr
         $users = User::orderBy('name')->get();
 
-        return view('items.borrow', compact('item', 'users')); // Kirimkan data pengguna ke view
+        return view('items.borrow', compact('item', 'users')); 
     }
 
-    /**
-     * Memproses dan menyimpan data peminjaman benda.
-     */
-    public function borrow(Request $request)
-    {
+    
+    //========================memproses dan menyimpan data peminjaman benda=====================
+    public function borrow(Request $request){
         $request->validate([
             'item_id' => 'required|exists:items,id',
-            'user_id' => 'required|exists:users,id', // Ganti 'borrower_name' dengan 'user_id'
+            'user_id' => 'required|exists:users,id',
             'purpose' => 'required|string',
         ]);
 
         $item = Item::find($request->item_id);
 
-        // ... (logika cek benda dipinjam yang sudah ada) ...
 
         Borrowing::create([
             'item_id' => $item->id,
-            'user_id' => $request->user_id, // Simpan user_id
+            'user_id' => $request->user_id, 
             'purpose' => $request->purpose,
             'borrowed_at' => now(),
         ]);
 
         return redirect()->route('items.borrow-success')
-                        ->with('success', 'Peminjaman benda "' . $item->name . '" berhasil dicatat!');
+                        ->with('success', 'Peminjaman berkas "' . $item->name . '" berhasil dicatat!');
     }
 
-    public function index(Request $request)
-{
-    $query = Item::query();
+    
+    
+    //=========================Nampilin berkas terdaftar===========================
+    public function index(Request $request){
+        $query = Item::query();
 
-    // Menerapkan filter berdasarkan status ketersediaan
-    if ($request->has('status') && $request->status !== '') {
-        $status = $request->status;
-        if ($status === 'available') {
-            $query->doesntHave('activeBorrowing'); // Tidak memiliki peminjaman aktif
-        } elseif ($status === 'borrowed') {
-            $query->has('activeBorrowing'); // Memiliki peminjaman aktif
+        if ($request->has('status') && $request->status !== '') {
+            $status = $request->status;
+            if ($status === 'available') {
+                $query->doesntHave('activeBorrowing'); //siap dipinjam
+            } 
+            elseif ($status === 'borrowed') {
+                $query->has('activeBorrowing'); //sedang dipinjam
+            }
         }
+
+        $items = $query->with('activeBorrowing.user')->paginate(10);
+
+        return view('admin.items.index', compact('items'));
     }
 
-    $items = $query->with('activeBorrowing.user')->paginate(10);
-
-    return view('admin.items.index', compact('items'));
-}
 
 
-
-    // Menambahkan method untuk halaman sukses peminjaman
-    public function borrowSuccess()
-    {
+    //======================Menambahkan method untuk halaman sukses peminjaman===========================
+    public function borrowSuccess(){
         return view('items.borrow-success');
     }
 
 
-public function downloadQrCode(Item $item)
-{
-    // Pastikan ada data QR Code yang sudah tersimpan
-    if (!$item->qr_code_path) {
-        return redirect()->back()->with('error', 'QR Code tidak ditemukan.');
-    }
-
-    $qrCodeData = json_encode([
-        'item_id' => $item->id,
-        'unique_code' => $item->unique_code,
-        'item_name' => $item->name
-    ]);
-
-    // Generate QR Code dalam format SVG
-    $svg = QrCode::format('svg')->size(300)->generate($qrCodeData);
-
-    // Tetapkan nama file dengan ekstensi .svg
-    $fileName = 'qr-' . Str::slug($item->unique_code) . '.svg';
-
-    // Mengirimkan file SVG sebagai respons unduhan
-    return response($svg, 200)
-            ->header('Content-Type', 'image/svg+xml')
-            ->header('Content-Disposition', 'attachment; filename="' . $fileName . '"');
-}
-
-// ini untuk hapus berkas terdaftar
-public function destroy(Item $item)
-{
-    $item->delete();
-    return redirect()->route('admin.items.index')->with('success', 'Berkas berhasil dihapus.');
-}
-
-
-// ... di dalam ItemController.php ...
-
-public function checkAvailability(Request $request)
-{
-    $uniqueCode = $request->input('unique_code');
-    $item = null;
-    $activeBorrowing = null;
-
-    if ($uniqueCode) {
-        $item = Item::where('unique_code', $uniqueCode)->first();
-        if ($item) {
-            $activeBorrowing = $item->activeBorrowing;
+    //============================================download QR===================================
+    public function downloadQrCode(Item $item){
+        if (!$item->qr_code_path) {
+            return redirect()->back()->with('error', 'QR Code tidak ditemukan.');
         }
+
+        $qrCodeData = json_encode([
+            'item_id' => $item->id,
+            'unique_code' => $item->unique_code,
+            'item_name' => $item->name
+        ]);
+
+        $svg = QrCode::format('svg')->size(300)->generate($qrCodeData); //simpan dengan svg
+
+        $fileName = 'qr-' . Str::slug($item->unique_code) . '.svg';
+
+        return response($svg, 200) // Mengirimkan file SVG sebagai respons unduhan
+                ->header('Content-Type', 'image/svg+xml')
+                ->header('Content-Disposition', 'attachment; filename="' . $fileName . '"');
     }
 
-    return view('user.check-availability', compact('item', 'activeBorrowing', 'uniqueCode'));
-}
+    //===================ini untuk hapus berkas terdaftar============================
+    public function destroy(Item $item){
+         if ($item->qr_code_path && Storage::disk('public')->exists($item->qr_code_path)) {
+            Storage::disk('public')->delete($item->qr_code_path);
+        }
+
+        $item->delete();
+
+        return redirect()->route('admin.items.index')->with('success', 'Berkas dan QR Code berhasil dihapus.');
+    }
+
+
+    //========================cek ketersediaan berkas oleh karyawan=================================
+    public function checkAvailability(Request $request){
+        $uniqueCode = $request->input('unique_code');
+        $item = null;
+        $activeBorrowing = null;
+
+        if ($uniqueCode) {
+            $item = Item::where('unique_code', $uniqueCode)->first();
+            if ($item) {
+                $activeBorrowing = $item->activeBorrowing;
+            }
+        }
+
+        return view('user.check-availability', compact('item', 'activeBorrowing', 'uniqueCode'));
+    }
 
 
 }

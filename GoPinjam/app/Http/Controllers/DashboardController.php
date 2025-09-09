@@ -13,7 +13,7 @@ class DashboardController extends Controller
     public function index()
     {
         $user = Auth::user();
-
+        //admin
         if ($user->role === 'admin') {
             $totalItems = Item::count();
             $borrowedItems = Borrowing::whereNull('returned_at')->count();
@@ -22,7 +22,7 @@ class DashboardController extends Controller
             return view('admin.dashboard', compact('totalItems', 'borrowedItems', 'availableItems'));
         }
 
-        // Logika untuk Pengguna Terdaftar
+        //karywan
         $totalBorrowedByUser = Borrowing::where('user_id', $user->id)->count();
         $activeBorrowedByUser = Borrowing::where('user_id', $user->id)
                                          ->whereNull('returned_at')

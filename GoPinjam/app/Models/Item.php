@@ -16,11 +16,8 @@ class Item extends Model
         'qr_code_path',
     ];
 
-    /**
-     * Dapatkan peminjaman aktif untuk item.
-     */
-    public function activeBorrowing(): HasOne
-    {
+    //============peminjaman aktif bro======================
+    public function activeBorrowing(): HasOne{
         return $this->hasOne(Borrowing::class)->whereNull('returned_at');
     }
 }

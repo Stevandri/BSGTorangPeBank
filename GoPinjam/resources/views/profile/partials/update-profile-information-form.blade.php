@@ -25,27 +25,27 @@
                     @enderror
                 </div>
 
-                <div class="mb-3">
+                {{-- <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
                     <input type="text" id="username" name="username" class="form-control" value="{{ old('username', $user->username) }}" required autocomplete="username">
                     @error('username')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
-                </div>
+                </div> --}}
 
                 <div class="mb-3">
                     <label for="position" class="form-label">Posisi</label>
-                    <input type="text" id="position" name="position" class="form-control" value="{{ old('position', $user->position) }}" readonly>
+                    <input type="text" id="role" name="role" class="form-control" value="{{ old('role', $user->role) }}" readonly>
                 </div>
 
 
-                <div class="mb-3">
+                {{-- <div class="mb-3">
                     <label for="phone_number" class="form-label">Nomor Telepon</label>
                     <input type="text" id="phone_number" name="phone_number" class="form-control" value="{{ old('phone_number', $user->phone_number) }}" required autocomplete="tel">
                     @error('phone_number')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
-                </div>
+                </div> --}}
 
                 <div class="mb-3">
                     <label for="email" class="form-label">Alamat Email</label>

@@ -72,6 +72,7 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
 
     //hapus berkas terdaftar 
     Route::delete('/items/{item}', [ItemController::class, 'destroy'])->name('items.destroy');
+    
 });
 
 require __DIR__.'/auth.php';

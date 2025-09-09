@@ -13,24 +13,18 @@ use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
-    public function edit(Request $request): View
-    {
+    //==============form edit profil========================
+    public function edit(Request $request): View{
         return view('profile.edit', [
             'user' => $request->user(),
         ]);
     }
 
-    /**
-     * Update the user's profile information.
-     */
+    //=====================update profil oleh tiap user=====================
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $user = $request->user();
         
-        // Validasi tambahan untuk kolom baru
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255', Rule::unique('users')->ignore($user->id)],
@@ -39,7 +33,6 @@ class ProfileController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
         ]);
         
-        // Perbarui data pengguna
         $user->fill([
             'name' => $request->name,
             'username' => $request->username,
@@ -57,11 +50,10 @@ class ProfileController extends Controller
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
-    /**
-     * Delete the user's account.
-     */
-    public function destroy(Request $request): RedirectResponse
-    {
+    
+
+    //=====================Hpus apkun user oleh tiap user=============================
+    public function destroy(Request $request): RedirectResponse{
         $request->validate([
             'password' => ['required', 'current_password'],
         ]);

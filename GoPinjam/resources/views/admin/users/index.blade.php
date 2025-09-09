@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Pengguna Terdaftar</title>
+    <link rel="icon" href="{{ asset('favicon.png') }}" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -149,9 +150,8 @@
         // Update teks nama pengguna di modal
         deleteModal.querySelector('#userName').textContent = userName;
 
-        // Update action form agar sesuai route
         const deleteForm = deleteModal.querySelector('#deleteForm');
-        deleteForm.action = "/users/" + userId; // Sesuaikan dengan route delete yang ada
+        deleteForm.action = "/users/" + userId; 
     });
 </script>
 

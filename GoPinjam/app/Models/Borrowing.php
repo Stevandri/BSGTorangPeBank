@@ -12,7 +12,7 @@ class Borrowing extends Model
 
     protected $fillable = [
         'item_id',
-        'user_id', // Ganti 'borrower_name' dengan 'user_id'
+        'user_id', 
         'purpose',
         'borrowed_at',
         'returned_at',

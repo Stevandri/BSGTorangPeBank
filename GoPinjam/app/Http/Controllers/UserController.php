@@ -11,19 +11,15 @@ use Illuminate\Validation\Rules;
 
 class UserController extends Controller
 {
-    /**
-     * Menampilkan form pendaftaran pengguna baru oleh admin.
-     */
-    public function create()
-    {
+    //==========================ke form regist pengguna baru olh admin==========================
+    public function create(){
         return view('admin.users.create');
     }
 
-    /**
-     * Memproses pendaftaran pengguna baru.
-     */
-    public function store(Request $request)
-    {
+   
+
+    //============================Proses daftar pengguna bru====================================
+    public function store(Request $request){
         $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
@@ -47,25 +43,23 @@ class UserController extends Controller
         return redirect()->route('admin.users.create')->with('success', 'Pengguna berhasil didaftarkan.');
     }
 
-    /**
-     * Menampilkan daftar semua pengguna terdaftar.
-     */
-    public function index()
-    {
-        $users = User::paginate(15); // Mengambil semua pengguna dengan pagination
+    
+
+    //==========================Tampilkan semua pengguna trdftr===================================
+    public function index(){
+        $users = User::paginate(15); 
 
         return view('admin.users.index', compact('users'));
     }
 
     
-//ini untuk hapus pengguna yaaaa
-public function destroy($id)
-{
-    $user = User::findOrFail($id);
-    $user->delete();
+    //=====================================ini untuk hapus pengguna yaaaa================================
+    public function destroy($id){
+        $user = User::findOrFail($id);
+        $user->delete();
 
-    return redirect()->route('admin.users.index')->with('success', 'Pengguna berhasil dihapus.');
-}
+        return redirect()->route('admin.users.index')->with('success', 'Pengguna berhasil dihapus.');
+    }
 
 
 

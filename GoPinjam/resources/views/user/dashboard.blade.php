@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <link rel="icon" href="{{ asset('favicon.png') }}" type="image/png">
     <title>GoPinjam</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -20,7 +20,6 @@
             border-radius: 0 0 15px 15px;
         }
 
-        /* Card background custom */
         .modifstev {
             background-image: url(ilustrasiterdaftar.png);
             background-repeat: no-repeat;
@@ -38,14 +37,12 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        /* Hover effect untuk card */
         .modifstev:hover,
         .modifstev3:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
 
-        /* Judul dashboard */
         h2.h3 {
             font-weight: 700;
             color: #343a40;
@@ -64,7 +61,6 @@
             background: #fdf2f2;
         }
 
-        /* Badge */
         .badge {
             padding: 8px 12px;
             font-size: 0.85rem;
@@ -181,7 +177,6 @@
         </div>
     </div>
 
-    <!-- Bootstrap Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
